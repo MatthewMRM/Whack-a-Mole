@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Whackamole</title>
+        <meta charset="utf-8">
+
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- my css -->
+        <style type="text/css">
+
+        body {
+        background-color: gray;
+        }
+
+        p {
+        font-size: 3.5em;
+        font-weight: bold;
+        color: #4D5963;
+
+        }
+
+        button {
+            border: 4px solid #4D5963;
+            color: #4D5963;
+            font-size: 32px;
+            padding: 10px;
+            background-color: #c1cacb;
+            border-radius: 6px;
+            box-shadow: 2px 2px 4px #4D5963;
+        }
+
+        .container {
+            font-family: monospace;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px #9aa1a2;
+        }
+
+        .container::before {
+            content: "";
+            background-color: white; 
+            height: 900px;
+            width: 100%;
+            opacity: 0.7;
+            top: 0;
+            left: 0;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .space {
+            margin-top: 45px;
+        }
+
+        #yellow {
+            background: yellow;
+            border-radius: 10px 10px 10px 10px;
+            box-shadow: 2px 2px 4px gray;
+        }
+
+        #red {
+            background: red;
+            border-radius: 10px 10px 10px 10px;
+            box-shadow: 2px 2px 4px gray;
+        }
+
+        #blue {
+            background: blue;
+            border-radius: 10px 10px 10px 10px;
+            box-shadow: 2px 2px 4px gray;
+        }
+
+        #green {
+            background: green;
+            border-radius: 10px 10px 10px 10px;
+            box-shadow: 2px 2px 4px gray;
+        }
+
+        .box {
+            display: inline-block;
+            height: 150px;
+            width: 150px;
+            border: 5px solid #4D5963;
+        }
+
+        .center {
+            text-align: center;
+            margin-left: 0;
+        }
+
+        .btn-div {
+            margin-top: 80px;
+        }
+
+        .status, .status2 {
+            text-align: right;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Whackamole</p>
+                  
+                </div>
+
+                <div class="col-md-4 col-md-offset-4">
+                    <div>
+                        <p class="status"></p>
+                        <p class="status2"></p>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="row btn-div center">
+                        <button id="start">Begin if you Dare!!!</button>
+                    </div>
+                    <div class="row box-div">
+                        <div class="space center">
+                            <div class="box" id="yellow" data-index="0"></div>
+                            <div class="box" id="blue" data-index="1"></div>
+                            <div class="box" id="yellow" data-index="2"></div>
+                        </div>
+                        <div class="center">
+                            <div class="box" id="blue" data-index="3"></div>
+                            <div class="box" id="yellow" data-index="4"></div>
+                            <div class="box" id="blue" data-index="5"></div>
+                        </div>
+                        <div class="center">
+                            <div class="box" id="yellow" data-index="6"></div>
+                            <div class="box" id="blue" data-index="7"></div>
+                            <div class="box" id="yellow" data-index="8"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+        (function(){
+        "use strict";
+            //the action 
+            var order = [];
+            // variable to check against the order's index
+            var orderIndexCheck = 0;
+            // var for later grabbing all elements by class, click box; an array.
+            var boxes = $(".box");
+            // 
+
+          
+            var gameBase = function() {
+                // randomize a numerical value 
+                var random = Math.floor(Math.random()*8);
+                    console.log(boxes[random]);
+                // to concatenate the lights on to each other
+                order.push(random);
+                
+                // local var
+                var index = 0;
+                var lightsOn = setInterval(function() {
+                    //sets fade in-out on the boxes
+                    $(boxes[ order[index] ]).fadeOut();
+                    $(boxes[ order[index] ]).fadeIn();
+                    index++;
+                    // stops the interval
+                    if (index==order.length) {
+                        clearInterval(lightsOn);
+                    }  
+                }, 1000);
+            };
+            // variable for game count
+            var gameNum = 0;
+            
+            // click listener for boxes
+            boxes.click(function() {
+                
+                if (order[orderIndexCheck] == $(this).data("index") ){
+                    orderIndexCheck++;
+                    // if same, run the game again
+                    if (order.length == orderIndexCheck) {
+                        gameBase();
+                        orderIndexCheck = 0;
+                        gameNum++;
+                        $(".status").html("Keep it up!");
+                        $(".status2").html("Round " + gameNum);
+                    };
+                // if you fail. 
+                } else {
+                    console.log("Disappinting");
+                    $(".status").html("Fail!");
+                    $(".status2").html("Try Again");
+                    order = [];
+                    orderIndexCheck = 0;
+                    gameNum = 0;
+                }
+            });
+            // to start/restart
+            $("#start").click(function(event) { 
+                order = [];
+                orderIndexCheck = 0;
+                gameNum = 0;
+                $(".status").html("");
+                $(".status2").html("");
+                gameBase();
+            })
+            })();
+        </script>
+    </body>
+</html>
+
+</body>
+</html>
