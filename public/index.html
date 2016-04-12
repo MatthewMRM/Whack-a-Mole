@@ -1,223 +1,190 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <title>Whackamole</title>
-        <meta charset="utf-8">
+<head>
+	<title>Whack-a-Mole</title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 
-        <!-- bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <!-- my css -->
-        <style type="text/css">
+	<style>
+	body{
+		background-color: #0F243B;
+		color: white;
+	}
+	.gameboard{
+	max-width: 600px;
+	max-height: 700px;
+}
 
-        body {
-        background-color: gray;
-        }
+.hole {
+	float: right;
+	margin-left: 0;
+	border:	2px solid white;
+	height: 150px;
+	width: 30%;
+}
 
-        p {
-        font-size: 3.5em;
-        font-weight: bold;
-        color: #4D5963;
+.hole:hover {
+	background-color: green;
+}
 
-        }
+.active {
+	background-size: 200px;
+	background-color: red;
+	
+}
+#start {
+	border-radius: 15px;
+	margin: 10px;
+}
 
-        button {
-            border: 4px solid #4D5963;
-            color: #4D5963;
-            font-size: 32px;
-            padding: 10px;
-            background-color: #c1cacb;
-            border-radius: 6px;
-            box-shadow: 2px 2px 4px #4D5963;
-        }
+#score {
+	margin: 10px;
+}
 
-        .container {
-            font-family: monospace;
-            position: relative;
-            z-index: 1;
-            text-shadow: 2px 2px 4px #9aa1a2;
-        }
+#popUp{
+	float:right;
+	height: 215px;
+	width: 305px;
+	margin-top:	-250px;
+	margin-right: 250px;
+	background-color: white;
+}
 
-        .container::before {
-            content: "";
-            background-color: white; 
-            height: 900px;
-            width: 100%;
-            opacity: 0.7;
-            top: 0;
-            left: 0;
-            position: absolute;
-            z-index: -1;
-        }
 
-        .space {
-            margin-top: 45px;
-        }
+}
 
-        #yellow {
-            background: yellow;
-            border-radius: 10px 10px 10px 10px;
-            box-shadow: 2px 2px 4px gray;
-        }
-
-        #red {
-            background: red;
-            border-radius: 10px 10px 10px 10px;
-            box-shadow: 2px 2px 4px gray;
-        }
-
-        #blue {
-            background: blue;
-            border-radius: 10px 10px 10px 10px;
-            box-shadow: 2px 2px 4px gray;
-        }
-
-        #green {
-            background: green;
-            border-radius: 10px 10px 10px 10px;
-            box-shadow: 2px 2px 4px gray;
-        }
-
-        .box {
-            display: inline-block;
-            height: 150px;
-            width: 150px;
-            border: 5px solid #4D5963;
-        }
-
-        .center {
-            text-align: center;
-            margin-left: 0;
-        }
-
-        .btn-div {
-            margin-top: 80px;
-        }
-
-        .status, .status2 {
-            text-align: right;
-            font-size: 2.5em;
-            font-weight: bold;
-        }
-
-        
-        </style>
-    </head>
-
-    <body>
-        <div class="container">
-
-            <div class="row">
-                <div class="col-md-4">
-                    <p>Whackamole</p>
-                  
-                </div>
-
-                <div class="col-md-4 col-md-offset-4">
-                    <div>
-                        <p class="status"></p>
-                        <p class="status2"></p>
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="row">
+#lose{
+	font: Arial;
+	font-size: 20px;
+}
+</style>
+</head>
+<body>
+	<h1 text-align="center">Whack-a-Mole</h1>
+	<div class="container">
+	<div class="row">
+		<div class="gameboard">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="row btn-div center">
-                        <button id="start">Begin if you Dare!!!</button>
+                        <button id="start">Begin</button>
                     </div>
+                    <div>	
+						<p class="timer">Timer:</p>
+					</div>
+					<div>
+						<p id="score">Score:</p>
+					</div>
+					<div>
+						<p id="highScore">High Score:</p>
+					</div>	
+					<div id="speedy">
+					</div>
                     <div class="row box-div">
                         <div class="space center">
-                            <div class="box" id="yellow" data-index="0"></div>
-                            <div class="box" id="blue" data-index="1"></div>
-                            <div class="box" id="yellow" data-index="2"></div>
+                            <div class="hole" data-hole="1"></div>
+							<div class="hole" data-hole="2"></div>
+							<div class="hole" data-hole="3"></div>
                         </div>
                         <div class="center">
-                            <div class="box" id="blue" data-index="3"></div>
-                            <div class="box" id="yellow" data-index="4"></div>
-                            <div class="box" id="blue" data-index="5"></div>
+                            <div class="hole" data-hole="4"></div>
+							<div class="hole" data-hole="5"></div>
+							<div class="hole" data-hole="6"></div>
                         </div>
-                        <div class="center">
-                            <div class="box" id="yellow" data-index="6"></div>
-                            <div class="box" id="blue" data-index="7"></div>
-                            <div class="box" id="yellow" data-index="8"></div>
+                        <div class="space center">
+                            <div class="hole" data-hole="7"></div>
+							<div class="hole" data-hole="8"></div>
+							<div class="hole" data-hole="9"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
+          </div>
         </div>
-        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-        <script type="text/javascript">
-        (function(){
-        "use strict";
-            //the action 
-            var order = [];
-            // variable to check against the order's index
-            var orderIndexCheck = 0;
-            // var for later grabbing all elements by class, click box; an array.
-            var boxes = $(".box");
-            // 
+		
+			
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.js"></script>
+	<script type="text/javascript">
 
-          
-            var gameBase = function() {
-                // randomize a numerical value 
-                var random = Math.floor(Math.random()*8);
-                    console.log(boxes[random]);
-                // to concatenate the lights on to each other
-                order.push(random);
-                
-                // local var
-                var index = 0;
-                var lightsOn = setInterval(function() {
-                    //sets fade in-out on the boxes
-                    $(boxes[ order[index] ]).fadeOut();
-                    $(boxes[ order[index] ]).fadeIn();
-                    index++;
-                    // stops the interval
-                    if (index==order.length) {
-                        clearInterval(lightsOn);
-                    }  
-                }, 1000);
-            };
-            // variable for game count
-            var gameNum = 0;
-            
-            // click listener for boxes
-            boxes.click(function() {
-                
-                if (order[orderIndexCheck] == $(this).data("index") ){
-                    orderIndexCheck++;
-                    // if same, run the game again
-                    if (order.length == orderIndexCheck) {
-                        gameBase();
-                        orderIndexCheck = 0;
-                        gameNum++;
-                        $(".status").html("Keep it up!");
-                        $(".status2").html("Round " + gameNum);
-                    };
-                // if you fail. 
-                } else {
-                    console.log("Disappinting");
-                    $(".status").html("Fail!");
-                    $(".status2").html("Try Again");
-                    order = [];
-                    orderIndexCheck = 0;
-                    gameNum = 0;
-                }
-            });
-            // to start/restart
-            $("#start").click(function(event) { 
-                order = [];
-                orderIndexCheck = 0;
-                gameNum = 0;
-                $(".status").html("");
-                $(".status2").html("");
-                gameBase();
-            })
-            })();
+  $(document).ready(function() {
+  "use strict";
+
+var timer= 30;
+var score = 0;
+var highScore = 0;
+$("#lose").hide();
+
+$("#start").one('click', function(){
+	startGame();
+	$("#start").html("Game Started");
+	$("#speedy").hide();
+	
+});
+
+$(".gameboard").on('click', ".active", function(){
+	score+=1;
+	$("#score").html("Score: " + score);
+
+});
+
+function startGame(){
+	var intervalId = setInterval(function() {
+		$(".timer").html("Timer: " + timer);
+		timer-=1; 
+		if(timer == 0){
+			clearInterval(intervalId);
+			// disable();
+			$("#score").html("Score: " + score);
+			}
+		}, 1000);
+
+	var moles= setInterval(function() {
+
+		var random = randomNumber(1,9);
+		moleup(random);
+		if(timer === 0){
+			$("#score").html("Score: " + score);
+			$(".timer").html("Timer: " + timer);
+			if(score >=20) {
+				$("#speedy").show();
+			} else {
+				$("#lose").show();
+			}
+			clearInterval(moles);
+			endgame();
+		}
+	},1000);
+}
+
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function moleup(padNumber) {
+	$("[data-hole='"+ padNumber +"']").addClass("active");
+	
+	setTimeout(function(){
+		$("[data-hole='"+ padNumber +"']").removeClass("active");
+	}, 1000);	
+}
+
+function endgame() {
+	console.log(score);
+		if(score >= highScore){
+			$("#highScore").html("High Score: " + score);	
+			highScore = score;
+			score = 0;
+			$("#score").html("Score: " + score);
+		} else {
+			score = 0;
+		}
+} 
+});
+
+
+
+// }
         </script>
     </body>
 </html>
