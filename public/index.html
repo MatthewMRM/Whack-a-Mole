@@ -4,30 +4,59 @@
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 
 	<style>
-	body{
-		background-color: #0F243B;
+	h1{
+		font-size: 48px;
+		text-align: center;
 		color: white;
+		font-weight: bold;
+	}
+	body{
+		background-image: url(/img/beep_beep.jpg);
+		
+		
+	}
+	button{
+		width:100px;
+		height: 25px;
+		background-color: #D6E050;
+		color:#E55450;
+		font-weight: bold;
+		font-size: 14px;
+	}
+	.container{
+
 	}
 	.gameboard{
 	max-width: 600px;
-	max-height: 700px;
+	max-height: 800px;
+	left: 200px;
 }
+	.info{
+	position: absolute;
+	right: 300px;
+	color: white;	
+	font-weight: bold;
+	font-size: 28px;
+
+	}
 
 .hole {
+
 	float: right;
 	margin-left: 0;
-	border:	2px solid white;
+	border:	4px solid white;
 	height: 150px;
 	width: 30%;
 }
 
 .hole:hover {
-	background-color: green;
+	background-image: url(/img/road_runner4.jpg);
+
 }
 
 .active {
 	background-size: 200px;
-	background-color: red;
+	background-image: url(/img/road-runner2.jpg);
 	
 }
 #start {
@@ -48,9 +77,6 @@
 	background-color: white;
 }
 
-
-}
-
 #lose{
 	font: Arial;
 	font-size: 20px;
@@ -62,19 +88,21 @@
 	<div class="container">
 	<div class="row">
 		<div class="gameboard">
-                <div class="col-md-8 col-md-offset-2">
+                
                     <div class="row btn-div center">
-                        <button id="start">Begin</button>
-                    </div>
+                        <ul><button id="start">Start</button>
+                  	<div class= "info">
                     <div>	
-						<p class="timer">Timer:</p>
+						<dl class="timer">Timer:</dl>
 					</div>
 					<div>
-						<p id="score">Score:</p>
+						<dl id="score">Score:</dl>
 					</div>
 					<div>
-						<p id="highScore">High Score:</p>
-					</div>	
+						<dl id="highScore">High Score:</dl>
+					</div>
+					</div>
+					</ul></div>	
 					<div id="speedy">
 					</div>
                     <div class="row box-div">
@@ -97,7 +125,7 @@
                 </div>
             </div>
           </div>
-        </div>
+        
 
 		
 			
@@ -114,12 +142,16 @@ var score = 0;
 var highScore = 0;
 $("#lose").hide();
 
-$("#start").one('click', function(){
-	startGame();
-	$("#start").html("Game Started");
-	$("#speedy").hide();
 	
-});
+$("#start").click(function(event) { 
+                timer= 30;
+                score = 0;
+                highScore = 0;
+                $("#start").html("Meep Meep");
+                startGame();
+            }); 	
+	
+
 
 $(".gameboard").on('click', ".active", function(){
 	score+=1;
@@ -140,7 +172,7 @@ function startGame(){
 
 	var moles= setInterval(function() {
 
-		var random = randomNumber(1,9);
+		var random = randomNumber(0,9);
 		moleup(random);
 		if(timer === 0){
 			$("#score").html("Score: " + score);
@@ -153,7 +185,7 @@ function startGame(){
 			clearInterval(moles);
 			endgame();
 		}
-	},1000);
+	}, 1000);
 }
 
 function randomNumber(min, max) {
@@ -179,7 +211,9 @@ function endgame() {
 		} else {
 			score = 0;
 		}
-} 
+
+
+};
 });
 
 
