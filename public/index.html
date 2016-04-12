@@ -56,7 +56,7 @@
 
 .active {
 	background-size: 200px;
-	background-image: url(/img/road-runner2.jpg);
+	background-image: url(/img/roadrunner_5.jpg);
 	
 }
 #start {
@@ -140,6 +140,7 @@
 var timer= 30;
 var score = 0;
 var highScore = 0;
+var sound = new Audio('Roadrunner.wav');
 $("#lose").hide();
 
 	
@@ -148,6 +149,7 @@ $("#start").click(function(event) {
                 score = 0;
                 highScore = 0;
                 $("#start").html("Meep Meep");
+                sound.play();
                 startGame();
             }); 	
 	
@@ -156,6 +158,7 @@ $("#start").click(function(event) {
 $(".gameboard").on('click', ".active", function(){
 	score+=1;
 	$("#score").html("Score: " + score);
+	sound.play();
 
 });
 
