@@ -1,8 +1,6 @@
 <html>
-<head>
+	<head>
 	<title>Whack-a-Mole</title>
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
-
 	<style>
 	h1{
 		font-size: 48px;
@@ -30,201 +28,211 @@
 	max-width: 600px;
 	max-height: 800px;
 	left: 200px;
-}
+	}
 	.info{
 	position: absolute;
 	right: 300px;
 	color: white;	
 	font-weight: bold;
 	font-size: 28px;
-
+	text-align: left;
+	border-color: black;
+	border: 2px;
 	}
 
-.hole {
+	.hole {
 
 	float: right;
 	margin-left: 0;
 	border:	4px solid white;
 	height: 150px;
 	width: 30%;
-}
+	}
 
-.hole:hover {
-	background-image: url(/img/road_runner4.jpg);
+	.hole:hover {
+		background-image: url(/img/road_runner4.jpg);
 
-}
+	}
 
-.active {
-	background-size: 200px;
-	background-image: url(/img/roadrunner_5.jpg);
-	
-}
-#start {
-	border-radius: 15px;
-	margin: 10px;
-}
+	.active {
+		background-size: 200px;
+		background-image: url(/img/roadrunner_5.jpg);
+		
+	}
+	#start {
+		border-radius: 15px;
+		margin: 10px;
+	}
 
-#score {
-	margin: 10px;
-}
+	#score {
+		margin: 10px;
+	}
 
-#popUp{
-	float:right;
-	height: 215px;
-	width: 305px;
-	margin-top:	-250px;
-	margin-right: 250px;
-	background-color: white;
-}
+	#popUp{
+		float:right;
+		height: 215px;
+		width: 305px;
+		margin-top:	-250px;
+		margin-right: 250px;
+		background-color: white;
+	}
 
-#lose{
-	font: Arial;
-	font-size: 20px;
-}
-</style>
-</head>
-<body>
-	<h1 text-align="center">Whack-a-Mole</h1>
-	<div class="container">
-	<div class="row">
-		<div class="gameboard">
-                
-                    <div class="row btn-div center">
-                        <ul><button id="start">Start</button>
-                  	<div class= "info">
-                    <div>	
-						<dl class="timer">Timer:</dl>
-					</div>
-					<div>
-						<dl id="score">Score:</dl>
-					</div>
-					<div>
-						<dl id="highScore">High Score:</dl>
-					</div>
-					</div>
-					</ul></div>	
-					<div id="speedy">
-					</div>
-                    <div class="row box-div">
-                        <div class="space center">
-                            <div class="hole" data-hole="1"></div>
+	#lose{
+		font-weight: bold;
+		font-size: 40px;
+		text-align: center;
+		color: white;
+		border-width: 2px;
+		display: none;
+	}
+	#speedy{
+		font-weight: bold;
+		font-size: 40px;
+		display: none;
+	}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	</head>
+	<body>
+		<h1 text-align="center">Whack-a-Mole</h1>
+		<div class="container">
+		<div class="row">
+			<div class="gameboard">
+	                
+	            <div class="row btn-div center">
+	                        <ul><button id="start">Start</button>
+	                  	<div clas="tsh">
+	                  	<div class= "info">
+	                    <div>	
+							<dl class="timer">Timer:</dl>
+						</div>
+						<div>
+							<dl id="score">Score:</dl>
+						</div>
+						<div>
+							<dl id="highScore">High Score:</dl>
+						</div>	
+						</div>
+						<div id="speedy">High Score!!!</dl><dl><img src="/img/win_1.jpg"></dl>
+						</div>
+						<div id="lose"><dl>Try Again...</dl><dl><img src="/img/lose_1.jpg"></dl>
+						</div>
+						</div>
+						</ul></div>	
+	                    <div class="grid">
+	                    <div class="space center">
+	                        <div class="hole" data-hole="1"></div>
 							<div class="hole" data-hole="2"></div>
 							<div class="hole" data-hole="3"></div>
-                        </div>
-                        <div class="center">
-                            <div class="hole" data-hole="4"></div>
+	                    </div>
+	                    <div class="center">
+	                        <div class="hole" data-hole="4"></div>
 							<div class="hole" data-hole="5"></div>
 							<div class="hole" data-hole="6"></div>
-                        </div>
-                        <div class="space center">
-                            <div class="hole" data-hole="7"></div>
+	                    </div>
+	                    <div class="space center">
+	                        <div class="hole" data-hole="7"></div>
 							<div class="hole" data-hole="8"></div>
 							<div class="hole" data-hole="9"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-        
-
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	     </div>
+	        
 		
+		<script type="text/javascript">
+
+		$(document).ready(function() {
+		"use strict";
+
+		var timer= 15;
+		var score = 0;
+		var highScore = 0;
+		var sound = new Audio('Roadrunner.wav');
+		$("#lose").hide();
+		$("#speedy").hide();
+
 			
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/bootstrap.js"></script>
-	<script type="text/javascript">
-
-  $(document).ready(function() {
-  "use strict";
-
-var timer= 30;
-var score = 0;
-var highScore = 0;
-var sound = new Audio('Roadrunner.wav');
-$("#lose").hide();
-
-	
-$("#start").click(function(event) { 
-                timer= 30;
-                score = 0;
-                highScore = 0;
-                $("#start").html("Meep Meep");
-                sound.play();
-                startGame();
-            }); 	
-	
+		$("#start").click(function(event) { 
+		                timer= 15;
+		                score = 0;
+		                highScore = 0;
+		                $("#start").html("Meep Meep");
+		                sound.play();
+		                startGame();
+		 		        $("#lose").hide();
+		 		        $("#speedy").hide();
+		 		        $(".grid").show();
+		            }); 	
+			
 
 
-$(".gameboard").on('click', ".active", function(){
-	score+=1;
-	$("#score").html("Score: " + score);
-	sound.play();
-
-});
-
-function startGame(){
-	var intervalId = setInterval(function() {
-		$(".timer").html("Timer: " + timer);
-		timer-=1; 
-		if(timer == 0){
-			clearInterval(intervalId);
-			// disable();
+		$(".gameboard").on('click', ".active", function(){
+			score+=1;
 			$("#score").html("Score: " + score);
-			}
-		}, 1000);
+			sound.play();
+		});
 
-	var moles= setInterval(function() {
+		function startGame(){
+			var intervalId = setInterval(function() {
+				$(".timer").html("Timer: " + timer);
+				timer-=1; 
+				if(timer == 0){
+					clearInterval(intervalId);
+					// disable();
+					$("#score").html("Score: " + score);
+					}
+				}, 1000);
 
-		var random = randomNumber(0,9);
-		moleup(random);
-		if(timer === 0){
-			$("#score").html("Score: " + score);
-			$(".timer").html("Timer: " + timer);
-			if(score >=20) {
+			var moles= setInterval(function() {
+
+			var random = randomNumber(0,9);
+			moleup(random);
+			if(timer === 0){
+				$("#score").html("Score: " + score);
+				$(".timer").html("Timer: " + timer);
+			if(score >=10) {
 				$("#speedy").show();
+				$(".grid").hide();
+				$(".tsh").hide();
 			} else {
 				$("#lose").show();
+				$(".grid").hide();
+				$(".tsh").hide();
+			
 			}
 			clearInterval(moles);
 			endgame();
+			}
+			}, 1000);
 		}
-	}, 1000);
-}
 
-function randomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-
-function moleup(padNumber) {
-	$("[data-hole='"+ padNumber +"']").addClass("active");
-	
-	setTimeout(function(){
-		$("[data-hole='"+ padNumber +"']").removeClass("active");
-	}, 1000);	
-}
-
-function endgame() {
-	console.log(score);
-		if(score >= highScore){
-			$("#highScore").html("High Score: " + score);	
-			highScore = score;
-			score = 0;
-			$("#score").html("Score: " + score);
-		} else {
-			score = 0;
+		function randomNumber(min, max) {
+		  return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 
 
-};
-});
+		function moleup(padNumber) {
+			$("[data-hole='"+ padNumber +"']").addClass("active");
+			
+			setTimeout(function(){
+				$("[data-hole='"+ padNumber +"']").removeClass("active");
+			}, 1000);	
+		}
 
-
-
-// }
-        </script>
-    </body>
-</html>
-
-</body>
+		function endgame() {
+			console.log(score);
+				if(score >= highScore){
+					$("#highScore").html("High Score: " + score);	
+					highScore = score;
+					score = 0;
+					$("#score").html("Score: " + score);
+				} else {
+					score = 0;
+				}
+		};
+		});
+		</script>
+	</body>
 </html>
