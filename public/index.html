@@ -81,7 +81,7 @@
 			font-weight: bold;
 			font-size: 40px;
 			text-align: center;
-			color: white;
+			color: #32423C;
 			border-width: 2px;
 			display: none;
 		}
@@ -89,6 +89,7 @@
 			font-weight: bold;
 			font-size: 40px;
 			display: none;
+			color: #32423C;
 		}
 		</style>
 	</head>
@@ -143,15 +144,14 @@
 
 		$(document).ready(function() {
 		"use strict";
-		//set variable names
-		var timer= 15;
-		var score = 0;
-		var highScore = 0;
-		var sound = new Audio('Roadrunner.wav');
-		$("#lose").hide();
-		$("#win").hide();
+		//set variable names & values
+			var timer= 15;
+			var score = 0;
+			var highScore = 0;
+			var sound = new Audio('Roadrunner.wav');
+			
 
-		//click to start, plays music, and restarts	
+		//click to start, plays music, and restarts	(hides the win or lose visual when game is restarted)
 		$("#start").click(function(event) { 
 		    timer= 15;
 		    score = 0;
@@ -165,13 +165,13 @@
 		}); 	
 			
 
-		// implements a point for everytime you get the mole 
+		// implements a point/score for everytime you click the mole 
 		$(".gameboard").on('click', ".active", function(){
 			score+=1;
 			$("#score").html("Score: " + score);
 			sound.play();
 		});
-		//Starts the Game, Timer and Score. 
+		//Starts the Game, Timer and Score. Used interval to develop the functionality of timer and score.  
 		function startGame(){
 			var intervalId = setInterval(function() {
 				$(".timer").html("Timer: " + timer);
@@ -182,22 +182,22 @@
 					$("#score").html("Score: " + score);
 					}
 				}, 1000);
-
+			//This Interval generates the random selection of when moles pop up
 			var moles= setInterval(function() {
 
 			var random = randomNumber(0,9);
-			moleup(random);
-			if(timer === 0){
-				$("#score").html("Score: " + score);
-				$(".timer").html("Timer: " + timer);
-			if(score >=10) {
-				$("#win").show();
-				$(".grid").hide();
-				$(".tsh").hide();
-			} else {
-				$("#lose").show();
-				$(".grid").hide();
-				$(".tsh").hide();
+				moleup(random);
+				if(timer === 0){
+					$("#score").html("Score: " + score);
+					$(".timer").html("Timer: " + timer);
+				if(score >=10) {
+					$("#win").show();
+					$(".grid").hide();
+					$(".tsh").hide();
+				} else {
+					$("#lose").show();
+					$(".grid").hide();
+					$(".tsh").hide();
 			//shows and hides for when you lose and win the game. 
 			}
 			clearInterval(moles);
@@ -205,9 +205,9 @@
 			}
 			}, 1000);
 		}
-		//random selection of mole
+		//random selection of mole to return action 
 		function randomNumber(min, max) {
-		  return Math.floor(Math.random() * (max - min + 1)) + min;
+		  	return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 
 		//click on mole and activates the action
@@ -218,7 +218,7 @@
 				$("[data-hole='"+ padNumber +"']").removeClass("active");
 			}, 1000);	
 		}
-		// Ends the game 
+		// Ends the game, takes score and implements it to Highscore
 		function endgame() {
 			console.log(score);
 				if(score >= highScore){
