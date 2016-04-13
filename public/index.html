@@ -1,109 +1,107 @@
 <html>
 	<head>
-	<title>Whack-a-Mole</title>
-	<style>
-	h1{
-		font-size: 48px;
-		text-align: center;
-		color: white;
+		<title>Whack-a-Mole</title>
+		<style>
+		h1{
+			font-size: 48px;
+			text-align: center;
+			color: white;
+			font-weight: bold;
+		}
+		body{
+			background-image: url(/img/beep_beep.jpg);
+			
+			
+		}
+		button{
+			width:100px;
+			height: 25px;
+			background-color: #D6E050;
+			color:#E55450;
+			font-weight: bold;
+			font-size: 14px;
+		}
+		.container{
+
+		}
+		.gameboard{
+		max-width: 600px;
+		max-height: 800px;
+		left: 200px;
+		}
+		.info{
+		position: absolute;
+		right: 300px;
+		color: white;	
 		font-weight: bold;
-	}
-	body{
-		background-image: url(/img/beep_beep.jpg);
-		
-		
-	}
-	button{
-		width:100px;
-		height: 25px;
-		background-color: #D6E050;
-		color:#E55450;
-		font-weight: bold;
-		font-size: 14px;
-	}
-	.container{
+		font-size: 36px;
+		text-align: left;
+		border-color: black;
+		border: 2px;
+		}
 
-	}
-	.gameboard{
-	max-width: 600px;
-	max-height: 800px;
-	left: 200px;
-	}
-	.info{
-	position: absolute;
-	right: 300px;
-	color: white;	
-	font-weight: bold;
-	font-size: 28px;
-	text-align: left;
-	border-color: black;
-	border: 2px;
-	}
+		.hole {
 
-	.hole {
+		float: right;
+		margin-left: 0;
+		border:	4px solid white;
+		height: 150px;
+		width: 30%;
+		}
 
-	float: right;
-	margin-left: 0;
-	border:	4px solid white;
-	height: 150px;
-	width: 30%;
-	}
+		.hole:hover {
+			background-image: url(/img/road_runner4.jpg);
 
-	.hole:hover {
-		background-image: url(/img/road_runner4.jpg);
+		}
 
-	}
+		.active {
+			background-size: 200px;
+			background-image: url(/img/roadrunner_5.jpg);
+			
+		}
+		#start {
+			border-radius: 15px;
+			margin: 10px;
+		}
 
-	.active {
-		background-size: 200px;
-		background-image: url(/img/roadrunner_5.jpg);
-		
-	}
-	#start {
-		border-radius: 15px;
-		margin: 10px;
-	}
+		#score {
+			margin: 10px;
+		}
 
-	#score {
-		margin: 10px;
-	}
+		#popUp{
+			float:right;
+			height: 215px;
+			width: 305px;
+			margin-top:	-250px;
+			margin-right: 250px;
+			background-color: white;
+		}
 
-	#popUp{
-		float:right;
-		height: 215px;
-		width: 305px;
-		margin-top:	-250px;
-		margin-right: 250px;
-		background-color: white;
-	}
-
-	#lose{
-		font-weight: bold;
-		font-size: 40px;
-		text-align: center;
-		color: white;
-		border-width: 2px;
-		display: none;
-	}
-	#speedy{
-		font-weight: bold;
-		font-size: 40px;
-		display: none;
-	}
-	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		#lose{
+			font-weight: bold;
+			font-size: 40px;
+			text-align: center;
+			color: white;
+			border-width: 2px;
+			display: none;
+		}
+		#win{
+			font-weight: bold;
+			font-size: 40px;
+			display: none;
+		}
+		</style>
 	</head>
 	<body>
 		<h1 text-align="center">Whack-a-Mole</h1>
 		<div class="container">
-		<div class="row">
-			<div class="gameboard">
-	                
-	            <div class="row btn-div center">
-	                        <ul><button id="start">Start</button>
-	                  	<div clas="tsh">
-	                  	<div class= "info">
-	                    <div>	
+			<div class="row">
+				<div class="gameboard">     
+		            <div class="row btn-div center">
+		                <ul><button id="start">Start</button>
+		                <div clas="tsh">
+		                <div class= "info">
+		                <div>	
 							<dl class="timer">Timer:</dl>
 						</div>
 						<div>
@@ -113,25 +111,25 @@
 							<dl id="highScore">High Score:</dl>
 						</div>	
 						</div>
-						<div id="speedy">High Score!!!</dl><dl><img src="/img/win_1.jpg"></dl>
+						<div id="win">High Score!!!</dl><dl><img src="/img/win_1.jpg"></dl>
 						</div>
 						<div id="lose"><dl>Try Again...</dl><dl><img src="/img/lose_1.jpg"></dl>
 						</div>
 						</div>
 						</ul></div>	
-	                    <div class="grid">
-	                    <div class="space center">
-	                        <div class="hole" data-hole="1"></div>
+		                <div class="grid">
+		                <div class="space center">
+		                    <div class="hole" data-hole="1"></div>
 							<div class="hole" data-hole="2"></div>
 							<div class="hole" data-hole="3"></div>
-	                    </div>
-	                    <div class="center">
-	                        <div class="hole" data-hole="4"></div>
+		                </div>
+		                <div class="center">
+		                    <div class="hole" data-hole="4"></div>
 							<div class="hole" data-hole="5"></div>
 							<div class="hole" data-hole="6"></div>
-	                    </div>
-	                    <div class="space center">
-	                        <div class="hole" data-hole="7"></div>
+		                </div>
+		                <div class="space center">
+		                    <div class="hole" data-hole="7"></div>
 							<div class="hole" data-hole="8"></div>
 							<div class="hole" data-hole="9"></div>
 	                    </div>
@@ -140,40 +138,40 @@
 	        </div>
 	     </div>
 	        
-		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script type="text/javascript">
 
 		$(document).ready(function() {
 		"use strict";
-
+		//set variable names
 		var timer= 15;
 		var score = 0;
 		var highScore = 0;
 		var sound = new Audio('Roadrunner.wav');
 		$("#lose").hide();
-		$("#speedy").hide();
+		$("#win").hide();
 
-			
+		//click to start, plays music, and restarts	
 		$("#start").click(function(event) { 
-		                timer= 15;
-		                score = 0;
-		                highScore = 0;
-		                $("#start").html("Meep Meep");
-		                sound.play();
-		                startGame();
-		 		        $("#lose").hide();
-		 		        $("#speedy").hide();
-		 		        $(".grid").show();
-		            }); 	
+		    timer= 15;
+		    score = 0;
+		    highScore = 0;
+		    $("#start").html("Meep Meep");
+		    sound.play();
+		    startGame();
+		 	$("#lose").hide();
+		 	$("#win").hide();
+		 	$(".grid").show();
+		}); 	
 			
 
-
+		// implements a point for everytime you get the mole 
 		$(".gameboard").on('click', ".active", function(){
 			score+=1;
 			$("#score").html("Score: " + score);
 			sound.play();
 		});
-
+		//Starts the Game, Timer and Score. 
 		function startGame(){
 			var intervalId = setInterval(function() {
 				$(".timer").html("Timer: " + timer);
@@ -193,26 +191,26 @@
 				$("#score").html("Score: " + score);
 				$(".timer").html("Timer: " + timer);
 			if(score >=10) {
-				$("#speedy").show();
+				$("#win").show();
 				$(".grid").hide();
 				$(".tsh").hide();
 			} else {
 				$("#lose").show();
 				$(".grid").hide();
 				$(".tsh").hide();
-			
+			//shows and hides for when you lose and win the game. 
 			}
 			clearInterval(moles);
 			endgame();
 			}
 			}, 1000);
 		}
-
+		//random selection of mole
 		function randomNumber(min, max) {
 		  return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 
-
+		//click on mole and activates the action
 		function moleup(padNumber) {
 			$("[data-hole='"+ padNumber +"']").addClass("active");
 			
@@ -220,7 +218,7 @@
 				$("[data-hole='"+ padNumber +"']").removeClass("active");
 			}, 1000);	
 		}
-
+		// Ends the game 
 		function endgame() {
 			console.log(score);
 				if(score >= highScore){
